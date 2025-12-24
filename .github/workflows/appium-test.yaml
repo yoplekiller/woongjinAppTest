@@ -1,0 +1,55 @@
+name: WoongJin Appium Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+        # 수동 실행 가능
+  schedule:
+    - cron: '0/8 * * * 0' # 매 8시간마다 실행
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # GitHub이 Ubuntu 서버 자동 생성
+
+    steps:
+      # 1. 코드 가져오기
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Python 설치
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # 3. 의존성 설치
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 4. Node.js 설치 (Appium용)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 5. Appium 설치
+      - name: Install Appium
+        run: |
+          npm install -g appium@2.0
+          appium driver install uiautomator2
+
+      # 6. 에뮬레이터 + 테스트 실행 (핵심!)
+      - name: Run tests on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          script: |
+            appium &
+            sleep 5
+            pytest src/tests/test_login.py -v

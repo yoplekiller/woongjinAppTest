@@ -1,0 +1,38 @@
+# 환경 변수 (민감 정보)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# 테스트 결과물
+screenshots/
+page_sources/
+.pytest_cache/
+allure-results/
+allure-report/
+htmlcov/
+.coverage
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Appium
+node_modules/
+npm-debug.log
