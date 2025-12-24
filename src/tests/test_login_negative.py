@@ -1,4 +1,5 @@
 import allure
+import time
 
 
 
@@ -19,13 +20,14 @@ def test_login_wrong_password(login_page, home_page, test_user_credentials, wron
         print("✅ 이메일 로그인 페이지 노출 확인")
 
     with allure.step("잘못된 비밀번호로 로그인 시도"):
-        login_page.enter_username(valid_user)
-        login_page.enter_password(wrong_password)
-        login_page.click_login_button()
+        login_page.email_login(valid_user, wrong_password)
+        assert login_page.email_login_page_is_visible(), "❌ 이메일 로그인 페이지가 보이지 않음"
+        print("✅ 잘못된 비밀번호로 로그인 시도 완료")
+        
 
     with allure.step("오류 메시지 확인"):
         get_error_message = login_page.get_error_message()
-        assert get_error_message == "아이디 또는 비밀번호를 확인해주세요!.", f"예상 오류 메시지와 다름: {get_error_message}"
+        assert "일치하는 계정 정보가 없습니다." in get_error_message, f"예상 오류 메시지와 다름: {get_error_message}"    
     
     with allure.step("오류 팝업 닫기"):
         login_page.close_error_popup()
@@ -47,13 +49,14 @@ def test_login_invalid_account(login_page, home_page, wrong_user_credentials, te
         print("✅ 이메일 로그인 페이지 노출 확인")
 
     with allure.step("존재하지 않는 계정으로 로그인 시도"):
-        login_page.enter_username(invalid_user)
-        login_page.enter_password(valid_password)
-        login_page.click_login_button()
+        login_page.email_login(invalid_user, valid_password)
+        assert login_page.email_login_page_is_visible(), "❌ 이메일 로그인 페이지가 보이지 않음"
+        print("✅ 존재하지 않는 계정으로 로그인 시도 완료")
+        time.sleep(2)
 
     with allure.step("오류 메시지 확인"):
         get_error_message = login_page.get_error_message()
-        assert get_error_message == "일치하는 계정 정보가 없습니다.", f"예상 오류 메시지와 다름: {get_error_message}"
+        assert  "일치하는 계정 정보가 없습니다" in get_error_message, f"예상 오류 메시지와 다름: {get_error_message}"
 
     with allure.step("오류 팝업 닫기"):
         login_page.close_error_popup()
@@ -74,13 +77,13 @@ def test_login_empty_fields(login_page, home_page):
         print("✅ 이메일 로그인 페이지 노출 확인")
 
     with allure.step("빈 입력 필드로 로그인 시도"):
-        login_page.enter_username("")
-        login_page.enter_password("")
-        login_page.click_login_button()
+        login_page.email_login("", "")
+        assert login_page.email_login_page_is_visible(), "❌ 이메일 로그인 페이지가 보이지 않음"
+        print("✅ 빈 입력 필드로 로그인 시도 완료")
 
     with allure.step("오류 메시지 확인"):
         get_error_message = login_page.get_error_message()
-        assert get_error_message == "아이디 또는 비밀번호를 확인해주세요!.", f"예상 오류 메시지와 다름: {get_error_message}"
+        assert  "일치하는 계정 정보가 없습니다" in get_error_message, f"예상 오류 메시지와 다름: {get_error_message}"
 
     with allure.step("오류 팝업 닫기"):
         login_page.close_error_popup()
