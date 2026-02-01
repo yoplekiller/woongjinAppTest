@@ -74,7 +74,5 @@ def test_like_tab(home_page, login_page, like_page, test_user_credentials):
 
 
 
-
-
     
     

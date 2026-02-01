@@ -14,10 +14,12 @@ class WoongjinAppHomePage(BasePage):
     HOME_TAB = (AppiumBy.ACCESSIBILITY_ID, "홈")
     MY_PAGE_TAB = (AppiumBy.ACCESSIBILITY_ID, "마이")
 
+    # 홈 화면 확인용 로케이터
+    HOME_LOGO = (AppiumBy.XPATH, "//android.widget.TextView[@text='웅진마켓로고']")
+
     def home_page_is_visible(self) -> bool:
         """홈 페이지가 보이는지 확인"""
-        HOME_PAGE_TITLE = (AppiumBy.XPATH, "//android.widget.TextView[@text='웅진마켓']")
-        return self.is_element_visible(HOME_PAGE_TITLE)
+        return self.is_element_visible(self.HOME_LOGO)
 
 
     def click_search(self):
@@ -43,6 +45,11 @@ class WoongjinAppHomePage(BasePage):
     def click_search_tab(self):
         """검색 탭 클릭"""
         time.sleep(1)
-        self.click(self.SEARCH_TAB) 
+        self.click(self.SEARCH_TAB)
 
- 
+    def swipe_down(self, start_x = 500, start_y = 500, end_x = 500, end_y = 1500, duration = 500):
+        return super().swipe_down(start_x, start_y, end_x, end_y, duration)
+    
+    def swipe_up(self, start_x = 500, start_y = 1500, end_x = 500, end_y = 500, duration = 500):
+        return super().swipe_up(start_x, start_y, end_x, end_y, duration)
+

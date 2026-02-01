@@ -36,3 +36,7 @@ desktop.ini
 # Appium
 node_modules/
 npm-debug.log
+
+# XML dump files
+*.xml
+window_info.txt
