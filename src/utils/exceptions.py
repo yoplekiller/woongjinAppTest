@@ -2,8 +2,6 @@
 커스텀 예외 클래스
 실무용: 의미있는 에러 메시지
 """
-
-
 class AppiumTestError(Exception):
     """기본 테스트 에러"""
     pass
