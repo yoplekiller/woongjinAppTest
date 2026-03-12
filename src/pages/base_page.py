@@ -76,7 +76,8 @@ class BasePage:
             element = self.find_element(locator, timeout)
             element.clear()
             element.send_keys(text)
-            logger.info(f"Input text to {locator}: {text}")
+            masked = "****" if "password" in str(locator).lower() else text
+            logger.info(f"Input text to {locator}: {masked}")
             return element
         except Exception as e:
             logger.error(f"Failed to input text to {locator} - {e}")
@@ -141,6 +142,19 @@ class BasePage:
         except TimeoutException:
             logger.info(f"Element is not visible: {locator}")
             return False
+        
+
+    def wait_for_element(self, locator, timeout: int = 10) -> WebElement:
+        """요소가 나타날 때까지 대기"""
+        try:
+            element = WebDriverWait(self.driver, timeout).until(
+                EC.presence_of_element_located(locator)
+            )
+            logger.info(f"Element appeared: {locator}")
+            return element
+        except TimeoutException as e:
+            logger.error(f"Element did not appear within {timeout} seconds: {locator} - {e}")
+            raise
 
     def check_image_loaded(self, image_locator: Locator, timeout: int = 10) -> bool:
         """이미지가 제대로 로드되었는지 확인"""

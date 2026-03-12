@@ -1,6 +1,4 @@
-import pytest
 import allure
-import time
 
 
 @allure.feature("홈")
@@ -24,17 +22,13 @@ def test_home_page_scroll(home_page):
 
     with allure.step("아래로 스와이프 (1회)"):
         home_page.swipe_up()
-        time.sleep(1)
         home_page.take_screenshot("home_scroll_02_after_swipe1")
 
     with allure.step("아래로 스와이프 (2회)"):
         home_page.swipe_up()
-        time.sleep(1)
         home_page.take_screenshot("home_scroll_03_after_swipe2")
 
     with allure.step("위로 스와이프 (복귀)"):
         home_page.swipe_down()
         home_page.swipe_down()
-        time.sleep(1)
         home_page.take_screenshot("home_scroll_04_back_to_top")
-

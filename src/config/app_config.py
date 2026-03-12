@@ -14,7 +14,7 @@ class AppConfig:
     # 웅진마켓 앱 설정
     WOONGJIN_APP: Dict[str, str] = {
         "platformName": "Android",
-        "deviceName": "R3CX70ALSLB",
+        "deviceName": os.getenv("DEVICE_NAME", "R3CX70ALSLB"),
         "appPackage": "com.wjthinkbig.woongjinbooks",
         "appActivity": ".view.IntroActivity",
         "automationName": "UiAutomator2",

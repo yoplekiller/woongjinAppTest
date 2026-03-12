@@ -12,9 +12,8 @@ from pages.woongjin_app_category_page import WoongjinAppCategoryPage
 from pages.woongjin_app_like_page import WoongjinAppLikePage
 from pages.woongjin_app_login_page import WoongjinAppLoginPage
 from config.app_config import AppConfig
-from src.pages.woongjin_app_my_tab import WoongjinAppMyTabPage
+from pages.woongjin_app_my_tab import WoongjinAppMyTabPage
 from utils.popup_handler import handle_woongjin_popups
-from utils.page_source_helper import save_page_source, print_all_elements
 from utils.logger import get_logger
 from datetime import datetime
 import os
@@ -88,6 +87,20 @@ def wrong_user_credentials() -> dict:
         "user_id": os.getenv("WRONG_TEST_USER_ID"),
         "password": os.getenv("WRONG_TEST_USER_PASSWORD")
     }
+
+@pytest.fixture(scope="function")
+def navigate_to_email_login(driver, login_page):
+    """로그인 페이지에서 이메일 로그인으로 이동"""
+    login_page.go_to_email_login()
+    return login_page
+
+@pytest.fixture(scope="function")
+def navigate_to_search_tab(driver, home_page, search_page):
+    """홈페이지에서 검색 탭으로 이동"""
+    home_page.click_search_tab()
+    return search_page
+
+
     
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_environment() -> Generator[None, None, None]:

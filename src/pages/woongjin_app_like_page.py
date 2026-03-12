@@ -1,5 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from src.pages.base_page import BasePage
+from pages.base_page import BasePage
 
 
 class WoongjinAppLikePage(BasePage):

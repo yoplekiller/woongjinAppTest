@@ -1,6 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from pages.base_page import BasePage
-import time
 
 
 class WoongjinAppHomePage(BasePage):
@@ -44,7 +43,6 @@ class WoongjinAppHomePage(BasePage):
 
     def click_search_tab(self):
         """검색 탭 클릭"""
-        time.sleep(1)
         self.click(self.SEARCH_TAB)
 
     def swipe_down(self, start_x = 500, start_y = 500, end_x = 500, end_y = 1500, duration = 500):
@@ -52,4 +50,12 @@ class WoongjinAppHomePage(BasePage):
     
     def swipe_up(self, start_x = 500, start_y = 1500, end_x = 500, end_y = 500, duration = 500):
         return super().swipe_up(start_x, start_y, end_x, end_y, duration)
+    
+
+    def is_category_page_loaded(self) -> bool:
+        """카테고리 페이지가 로드되었는지 확인"""
+        try:
+            return self.find_element(("xpath", "//android.widget.TextView[@text='카테고리']"), timeout=5) is not None
+        except Exception:
+            return False
 

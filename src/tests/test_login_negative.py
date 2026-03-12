@@ -14,7 +14,6 @@ def test_login_wrong_password(navigate_to_email_login, test_user_credentials, wr
     with allure.step("오류 메시지 확인 및 팝업 닫기"):
         assert "일치하는 계정 정보가 없습니다." in email_login_page.get_error_message()
         email_login_page.close_error_popup()
-        print("✅ 잘못된 비밀번호 오류 메시지 확인 완료")
 
 
 def test_login_invalid_account(navigate_to_email_login, wrong_user_credentials, test_user_credentials):
@@ -30,7 +29,6 @@ def test_login_invalid_account(navigate_to_email_login, wrong_user_credentials, 
     with allure.step("오류 메시지 확인 및 팝업 닫기"):
         assert "일치하는 계정 정보가 없습니다" in email_login_page.get_error_message()
         email_login_page.close_error_popup()
-        print("✅ 존재하지 않는 계정 오류 메시지 확인 완료")
 
 
 def test_login_empty_fields(navigate_to_email_login):
@@ -43,4 +41,3 @@ def test_login_empty_fields(navigate_to_email_login):
     with allure.step("오류 메시지 확인 및 팝업 닫기"):
         assert "일치하는 계정 정보가 없습니다" in email_login_page.get_error_message()
         email_login_page.close_error_popup()
-        print("✅ 빈 입력 필드 오류 메시지 확인 완료")

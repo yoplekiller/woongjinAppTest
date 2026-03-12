@@ -1,7 +1,6 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from pages.base_page import BasePage
-
-import re
+from src.utils import logger
 
 
 class WoongjinAppLoginPage(BasePage):
@@ -66,14 +65,6 @@ class WoongjinAppLoginPage(BasePage):
 
     def email_login(self, username: str, password: str) -> None:
         """이메일 로그인 수행"""
-
-        # 2. 입력값 검증 (선택)
-        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', username):
-            raise ValueError(f"올바른 이메일 형식이 아닙니다: {username}")
-        if len(password) < 8:
-            raise ValueError("비밀번호는 최소 8자 이상이어야 합니다")
-
-        # 3. 입력 및 로그인
         self.enter_username(username)
         self.enter_password(password)
         self.driver.hide_keyboard()
@@ -92,3 +83,9 @@ class WoongjinAppLoginPage(BasePage):
         """오류 팝업 닫기"""
         if self.is_element_clickable(self.INVALID_POPUP_BTN):
             self.click(self.INVALID_POPUP_BTN)
+
+
+    def get_element_text(self, locator, timeout = 10) -> str:
+        """요소의 텍스트 가져오기"""
+        element = self.find_element(locator, timeout)
+        return element.text if element else ""
