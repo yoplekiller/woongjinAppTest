@@ -1,16 +1,6 @@
 name: WoongJin Appium Tests
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
-        # 수동 실행 가능
-  schedule:
-    - cron: '0/8 * * * 0' # 매 8시간마다 실행
-
 jobs:
   test:
     runs-on: ubuntu-latest  # GitHub이 Ubuntu 서버 자동 생성
